@@ -6,7 +6,6 @@ import asyncComponent from '../AsyncComponent'
 
 const Login = asyncComponent(() => import('views/pages/Login'));
 const Home = asyncComponent(() => import('views/pages/Home'));
-const Search = asyncComponent(() => import('views/pages/Search'));
 const Product = asyncComponent(() => import('views/pages/Product'));
 const PurchasedHistory = asyncComponent(() => import('views/pages/PurchasedHistory'));
 
@@ -20,12 +19,6 @@ const PublicRoutes = ({ isLoggedIn }) => {
             path="/"
             name="Home"
             component={Home}
-          />
-          <Route
-            exact
-            path="/search"
-            name="Search"
-            component={Search}
           />
           <Route
             exact
