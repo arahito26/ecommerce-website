@@ -1,13 +1,12 @@
-import { AUTH_REQUEST, AUTH_SUCCESS } from './types'
+import { AUTH, AUTH_SUCCESS } from './types'
 
 export const signIn = () => {
 	return {
-    type: AUTH_REQUEST,
+    type: AUTH,
   };
 };
 
 export const signInSuccess = data => {
-  console.log('data:...-- ', data);
   return {
     type: AUTH_SUCCESS,
     payload: data

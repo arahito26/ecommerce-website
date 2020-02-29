@@ -1,4 +1,4 @@
-import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_ERROR } from './types'
+import { AUTH, AUTH_SUCCESS, AUTH_ERROR } from './types'
 
 const initialState = {
 	username: null,
@@ -9,7 +9,7 @@ const initialState = {
 
 const authReducers = (state = initialState, { type, payload }) => {
 	switch (type) {
-		case AUTH_REQUEST: {
+		case AUTH: {
 			return { ...state, isLoading: true };
 		}
 		case AUTH_SUCCESS: {
