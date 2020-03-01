@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {  Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
+import { createBrowserHistory } from 'history'
 
 import asyncComponent from '../AsyncComponent'
 
@@ -9,10 +10,12 @@ const Home = asyncComponent(() => import('views/pages/Home'));
 const Product = asyncComponent(() => import('views/pages/Product'));
 const PurchasedHistory = asyncComponent(() => import('views/pages/PurchasedHistory'));
 
+export const history = createBrowserHistory()
+
 const PublicRoutes = ({ isLoggedIn }) => {
   return (
     isLoggedIn ? (
-      <BrowserRouter>
+      <BrowserRouter history={history}>
         <Switch>
           <Route
             exact
@@ -35,15 +38,15 @@ const PublicRoutes = ({ isLoggedIn }) => {
         </Switch>
       </BrowserRouter>
     ) : (
-      <BrowserRouter>
-        <React.Fragment>
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Redirect to="/login" />
-          </Switch>
-        </React.Fragment>
-      </BrowserRouter>
-    )
+        <BrowserRouter>
+          <React.Fragment>
+            <Switch>
+              <Route exact path="/login" component={Login} />
+              <Redirect to="/login" />
+            </Switch>
+          </React.Fragment>
+        </BrowserRouter>
+      )
   )
 };
 
