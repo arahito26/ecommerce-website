@@ -40,7 +40,7 @@ const HomeWrapper = styled.div`
     bottom: 40px;
     width: -webkit-fill-available;
     overflow-y: scroll;
-    margin: 145px 10px 40px 10px;
+    margin: 175px 10px 40px 10px;
     .card-product {
       .ant-card-body {
         padding: 10px;
