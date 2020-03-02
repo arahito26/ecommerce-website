@@ -3,7 +3,7 @@ import { Card, Skeleton } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 
 const skeletonItem = [1, 2, 3, 4];
-const CardProducts = ({ products, loading }) => {
+const CardProducts = ({ products, loading, history }) => {
   return (
     <div className="card-products">
       {(products && !loading)
@@ -13,6 +13,7 @@ const CardProducts = ({ products, loading }) => {
             className="card-product"
             key={key.toString()}
             bordered={false}
+            onClick={() => history.push("/product", { product: item, refresh: true })}
           >
             <div className="image">
               <div>

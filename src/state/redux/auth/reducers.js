@@ -1,8 +1,10 @@
 import { AUTH, AUTH_SUCCESS, AUTH_ERROR } from './types'
 
+const username = localStorage.getItem('username');
+const password = localStorage.getItem('password');
 const initialState = {
-  username: null,
-  password: null,
+  username,
+  password,
   error: null,
   isLoading: false,
 };

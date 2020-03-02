@@ -1,7 +1,5 @@
 import { AUTH, AUTH_SUCCESS } from './types'
 import { googleprovider, fbprovider, fbase } from '../../../utils/auth'
-import { history } from "../../../router/index";
-
 
 export const signIn = () => {
   return {
@@ -20,8 +18,8 @@ export function signInFacebook() {
   return async dispatch => {
     try {
       const result = await fbase.auth().signInWithPopup(fbprovider)
-      var token = result.user.uid;
-      var email = result.user.email;
+      let token = result.user.uid;
+      let email = result.user.email;
       return {
         username: email,
         password: token
@@ -31,13 +29,13 @@ export function signInFacebook() {
     }
   }
 }
+
 export function signInGoogle() {
   return async dispatch => {
     try {
       const result = await fbase.auth().signInWithPopup(googleprovider)
-      var token = result.user.uid;
-      var email = result.user.email;
-      console.log(result, "-----")
+      let token = result.user.uid;
+      let email = result.user.email;
       return {
         username: email,
         password: token

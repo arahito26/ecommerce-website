@@ -35,6 +35,7 @@ const PublicRoutes = ({ isLoggedIn }) => {
             name="PurchasedHistory"
             component={PurchasedHistory}
           />
+          <Redirect to="/" />
         </Switch>
       </BrowserRouter>
     ) : (

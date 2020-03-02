@@ -46,28 +46,32 @@ const Login = memo(props => {
 
   const onClickFbLogin = async () => {
     const auth = await doSignInFacebook();
-    localStorage.setItem("username", auth.username);
-    localStorage.setItem("password", auth.password);
-    setTimeout(() => {
-      doSignInSuccess({
-        username: auth.username,
-        password: auth.password
-      });
-      return history.push("/", { refresh: true });
-    }, 1000);
+    if (auth) {
+      localStorage.setItem("username", auth.username);
+      localStorage.setItem("password", auth.password);
+      setTimeout(() => {
+        doSignInSuccess({
+          username: auth.username,
+          password: auth.password
+        });
+        return history.push("/", { refresh: true });
+      }, 1000);
+    }
   };
+
   const onClickGoogleLogin = async () => {
     const auth = await doSignInGoogle();
-    console.log(auth, "-----");
-    localStorage.setItem("username", auth.username);
-    localStorage.setItem("password", auth.password);
-    setTimeout(() => {
-      doSignInSuccess({
-        username: auth.username,
-        password: auth.password
-      });
-      return history.push("/", { refresh: true });
-    }, 1000);
+    if (auth) {
+      localStorage.setItem("username", auth.username);
+      localStorage.setItem("password", auth.password);
+      setTimeout(() => {
+        doSignInSuccess({
+          username: auth.username,
+          password: auth.password
+        });
+        return history.push("/", { refresh: true });
+      }, 1000);
+    }
   };
 
   return (

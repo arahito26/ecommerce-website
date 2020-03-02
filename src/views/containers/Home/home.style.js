@@ -6,6 +6,7 @@ const HomeWrapper = styled.div`
 
   .icon {
     font-size: 22px;
+    cursor: pointer;
   }
 
   .header-content {
@@ -42,6 +43,7 @@ const HomeWrapper = styled.div`
     overflow-y: scroll;
     margin: 175px 10px 40px 10px;
     .card-product {
+      cursor: pointer;
       .ant-card-body {
         padding: 10px;
       }

@@ -42,7 +42,7 @@ const Home = memo((props) => {
 
   const onSearchProduct = (key) => {
     let list = mockProduct && mockProduct.filter(m => {
-      return m.name.toLowerCase().includes(key.toLowerCase());
+      return m.title.toLowerCase().includes(key.toLowerCase());
     });
     setIsSearching(false);
     return list;
@@ -61,12 +61,18 @@ const Home = memo((props) => {
   );
 
   const handleInputSearch = ({ value }) => {
-    if (value) setIsSearching(true);
+    if (value) {
+      setResultsProduct([]);
+      setIsSearching(true);
+    }
     setSearchTerm(value);
   };
 
   const handleBackToHome = () => {
-    return history.goBack();
+    setSearchTerm('');
+    setResultsProduct([]);
+    setIsSearching(false);
+    return history.push("/", { refresh: true });
   };
 
   return (
@@ -80,6 +86,7 @@ const Home = memo((props) => {
           </Col>
           <Col span={22}>
             <Input
+              value={searchTerm}
               prefix={<SearchOutlined />}
               onChange={e => handleInputSearch(e.target)}
             />
@@ -89,7 +96,7 @@ const Home = memo((props) => {
       </div>
       {!searchTerm && (
         <React.Fragment>
-          <Card products={products} loading={isLoading} />
+          <Card products={products} loading={isLoading} history={history} />
           <Footer>
             <Link to="/">Home</Link>
             <Link to="/">Feed</Link>
@@ -98,7 +105,7 @@ const Home = memo((props) => {
           </Footer>
         </React.Fragment>
       )}
-      {searchTerm && <Search resultsProduct={resultsProduct} isSearching={isSearching} />}
+      {searchTerm && <Search resultsProduct={resultsProduct} isSearching={isSearching} history={history} />}
     </HomeWrapper>
   )
 });
