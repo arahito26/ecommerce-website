@@ -1,7 +1,8 @@
-import React, { memo } from "react";
+import React, { memo, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Row, Col, Form, Input, Checkbox, Button } from "antd";
+import { FacebookOutlined, GoogleOutlined } from '@ant-design/icons';
 
 import {
   signIn,
@@ -19,6 +20,8 @@ const Login = memo(props => {
     doSignInFacebook,
     doSignInGoogle
   } = props;
+  const usernameRef = useRef(null)
+	const passwordRef = useRef(null)
 
   const layout = {
     labelCol: { span: 8 },
@@ -28,6 +31,16 @@ const Login = memo(props => {
   const tailLayout = {
     wrapperCol: { offset: 8, span: 16 }
   };
+
+  useEffect(() => {
+		usernameRef.current.focus()
+  }, [usernameRef])
+
+	const usernameNext = (e) => {
+		if (e.key === "Enter") {
+			passwordRef.current.focus()
+		}
+  }
 
   const onFinish = values => {
     if (values.username && values.password && values.remember) {
@@ -90,7 +103,7 @@ const Login = memo(props => {
                 { required: true, message: "Please input your username!" }
               ]}
             >
-              <Input placeholder="Username" />
+              <Input placeholder="Username" ref={usernameRef} onKeyDown={usernameNext} />
             </Form.Item>
           </Row>
           <Row>
@@ -100,7 +113,7 @@ const Login = memo(props => {
                 { required: true, message: "Please input your password!" }
               ]}
             >
-              <Input.Password placeholder="Password" />
+              <Input.Password placeholder="Password" ref={passwordRef} />
             </Form.Item>
           </Row>
           <Row gutter={8} type="flex" justify="space-between">
@@ -115,7 +128,7 @@ const Login = memo(props => {
             </Col>
             <Col md={24} lg={8}>
               <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
+                <Button style={{ backgroundColor: '#464545', color: 'white' }} htmlType="submit">
                   Sign In
                 </Button>
               </Form.Item>
@@ -123,15 +136,21 @@ const Login = memo(props => {
           </Row>
           <Row>
             <Form.Item {...tailLayout}>
-              <Button onClick={() => onClickFbLogin()} type="primary">
-                Sign In with Facebook
+              <Button onClick={() => onClickFbLogin()} style={{ backgroundColor: '#344e7d', color: 'white' }}>
+                <span>
+                  <FacebookOutlined />
+                </span>
+                &ensp; Sign In with Facebook
               </Button>
             </Form.Item>
           </Row>
           <Row>
             <Form.Item {...tailLayout}>
-              <Button onClick={() => onClickGoogleLogin()} type="danger">
-                Sign In with Google
+              <Button onClick={() => onClickGoogleLogin()} type="primary">
+                <span>
+                  <GoogleOutlined />
+                  &ensp; Sign In with Google
+                </span>
               </Button>
             </Form.Item>
           </Row>
