@@ -1,15 +1,23 @@
 import React from 'react';
 import { Skeleton } from 'antd';
 
+import { CategoryWrapper } from '../home.style';
+
 const skeletonItem = [1, 2, 3, 4];
-const SwapCategory = ({ categories, loading }) => (
+const SwapCategory = ({ categories, loading, selectedCategory, handleSelectedCategory }) => (
   <div className="list-category">
     {(categories && !loading)
       ? categories.map((item, key) => (
-        <div className="item-category" key={key.toString()}>
-          <img src={item.imageUrl} alt="category" />
-          <div>{item.name}</div>
-        </div>
+        <CategoryWrapper
+          key={key.toString()}
+          item={selectedCategory}
+          onClick={() => handleSelectedCategory(item.name.replace(/ /g, '-').toLowerCase())}
+        >
+          <div className={item.name.replace(/ /g, '-').toLowerCase()}>
+            <img src={item.imageUrl} alt="category" />
+            <div>{item.name}</div>
+          </div>
+        </CategoryWrapper>
       ))
       : skeletonItem.map((_, key) => (
         <div className="item-category" key={key.toString()}>
@@ -19,7 +27,7 @@ const SwapCategory = ({ categories, loading }) => (
           </div>
         </div>
       ))
-  }
+    }
   </div>
 );
 

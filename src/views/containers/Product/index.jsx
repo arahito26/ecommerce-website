@@ -4,24 +4,27 @@ import { Row, Col, Button } from 'antd';
 import { connect } from 'react-redux';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 
-import { saveToPurchase } from 'state/redux/purchased/actions';
+import { saveToPurchase, saveToLoved } from 'state/redux/ecommerce/actions';
 import CardProduct from './components/Card';
 import { ProductWrapper } from './product.style';
 
 const Product = memo((props) => {
-  const { history, location, handleSavingPurchase } = props;
+  const { history, location, handleSavingPurchase, handleSavingLoved } = props;
   const { state } = location;
-  const { product } = state;
 
-  const [isLoved, setIsLoved] = useState(null);
+  const [tempProduct, setTempProduct] = useState(null);
 
   useEffect(() => {
-    if (isLoved === null) {
-      setIsLoved(product.loved)
-    }
-  }, [isLoved, product, product.loved]);
+    if (tempProduct === null) {
+      setTempProduct(state.product);
+    } 
+  }, [tempProduct, state.product])
 
-  const handleLovedProduct = () => setIsLoved(!isLoved);
+  const handleLovedProduct = () => {
+    const updateProduct = { ...tempProduct, loved: tempProduct.loved === 1 ? 0 : 1}
+    setTempProduct(updateProduct)
+    handleSavingLoved(updateProduct);
+  };
 
   return (
     <ProductWrapper>
@@ -32,7 +35,7 @@ const Product = memo((props) => {
             <h3>{state.product.title}</h3>
           </Col>
           <Col onClick={() => handleLovedProduct()}>
-            {isLoved
+            {tempProduct && tempProduct.loved
               ? <HeartFilled className="icon" />
               : <HeartOutlined className="icon" />}
           </Col>
@@ -52,6 +55,7 @@ const Product = memo((props) => {
 
 const mapDispatchToProps = dispatch => ({
   handleSavingPurchase: data => dispatch(saveToPurchase(data)),
+  handleSavingLoved: data => dispatch(saveToLoved(data)),
 });
 
 export default connect(null, mapDispatchToProps)(withRouter(Product));

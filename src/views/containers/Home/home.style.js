@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const HomeWrapper = styled.div`
   width: -webkit-fill-available;
@@ -87,7 +87,26 @@ const Footer = styled.div`
   }
 `;
 
+const CategoryWrapper = styled.div`
+  display: inline-block;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  width: 90px;
+  img {
+    width: 80px;
+    height: 80px;
+  }
+
+  ${props => props.item && css`
+    .${props.item} {
+      border-bottom: solid #01cec3;
+    }
+  `}
+`;
+
 export {
   HomeWrapper,
   Footer,
+  CategoryWrapper
 };

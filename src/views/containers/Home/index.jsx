@@ -31,8 +31,9 @@ const Home = memo((props) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [resultsProduct, setResultsProduct] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 3000);
+  const debouncedSearchTerm = useDebounce(searchTerm, 2000);
 
   useEffect(() => {
     if (categories === null && products === null) {
@@ -40,24 +41,23 @@ const Home = memo((props) => {
     }
   }, [doListData, categories, products]);
 
-  const onSearchProduct = (key) => {
-    let list = mockProduct && mockProduct.filter(m => {
-      return m.title.toLowerCase().includes(key.toLowerCase());
-    });
-    setIsSearching(false);
-    return list;
-  };
-
   useEffect(
     () => {
       if (debouncedSearchTerm) {
+        const onSearchProduct = (key) => {
+          let list = products && products.filter(m => {
+            return m.title.toLowerCase().includes(key.toLowerCase());
+          });
+          setIsSearching(false);
+          return list;
+        };
         const resultSearch = onSearchProduct(debouncedSearchTerm);
         setResultsProduct(resultSearch);
       } else {
         setResultsProduct([]);
       }
     },
-    [debouncedSearchTerm]
+    [debouncedSearchTerm, products]
   );
 
   const handleInputSearch = ({ value }) => {
@@ -74,6 +74,18 @@ const Home = memo((props) => {
     setIsSearching(false);
     return history.push("/", { refresh: true });
   };
+
+  const handleSelectedCategory = (name) => {
+    setSelectedCategory(name === selectedCategory ? null : name);
+  };
+
+  let customProducts = [];
+  if (selectedCategory === null) {
+    customProducts = products;
+  } else {
+    const filterProductByCategory = mockProduct && mockProduct.filter(item => item.category === selectedCategory);
+    customProducts = filterProductByCategory;
+  }
 
   return (
     <HomeWrapper>
@@ -92,15 +104,22 @@ const Home = memo((props) => {
             />
           </Col>
         </Row>
-        {!searchTerm && <SwapCategory categories={categories} loading={isLoading} />}
+        {!searchTerm && (
+          <SwapCategory
+            categories={categories}
+            loading={isLoading}
+            selectedCategory={selectedCategory}
+            handleSelectedCategory={handleSelectedCategory}
+          />
+        )}
       </div>
       {!searchTerm && (
         <React.Fragment>
-          <Card products={products} loading={isLoading} history={history} />
+          <Card products={customProducts} loading={isLoading} history={history} />
           <Footer>
             <Link to="/">Home</Link>
-            <Link to="/">Feed</Link>
-            <Link to="/">Card</Link>
+            <Link to="/liked">Feed</Link>
+            <Link to="/">Cart</Link>
             <Link to="/purchased">Profile</Link>
           </Footer>
         </React.Fragment>

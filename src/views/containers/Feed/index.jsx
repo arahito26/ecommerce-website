@@ -3,18 +3,19 @@ import { connect } from 'react-redux';
 
 import ListProducts from 'views/components/ListProducts';
 
-const PurchasedHistory = memo(({ listPurchaseHistory, isLoading }) => {
+const PurchasedHistory = memo(({ products, isLoading }) => {
+  const loveHistories = products && products.filter(item => item.loved === 1);
   return (
     <ListProducts
-      title="Purchase History"
-      listProducts={listPurchaseHistory}
+      title="Feed"
+      listProducts={loveHistories}
       isLoading={isLoading}
     />
-  )
+  );
 });
 
 const mapStateToProps = ({ ecommerce }) => ({
-  listPurchaseHistory: ecommerce.purchaseHistories,
+  products: ecommerce.data && ecommerce.data.productPromo,
   isLoading: ecommerce.isLoading,
 });
 

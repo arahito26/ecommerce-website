@@ -8,6 +8,7 @@ import asyncComponent from '../AsyncComponent'
 const Login = asyncComponent(() => import('views/pages/Login'));
 const Home = asyncComponent(() => import('views/pages/Home'));
 const Product = asyncComponent(() => import('views/pages/Product'));
+const Feed = asyncComponent(() => import('views/pages/Feed'));
 const PurchasedHistory = asyncComponent(() => import('views/pages/PurchasedHistory'));
 
 export const history = createBrowserHistory()
@@ -22,6 +23,12 @@ const PublicRoutes = ({ isLoggedIn }) => {
             path="/"
             name="Home"
             component={Home}
+          />
+          <Route
+            exact
+            path="/liked"
+            name="Feed"
+            component={Feed}
           />
           <Route
             exact

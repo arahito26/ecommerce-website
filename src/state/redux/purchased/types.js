@@ -1,3 +1,0 @@
-export const PURCHASED = 'PURCHASED';
-// export const PURCHASED_SUCCESS = 'PURCHASED_SUCCESS';
-// export const PURCHASED_ERROR = 'PURCHASED_ERROR';
